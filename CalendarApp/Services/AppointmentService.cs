@@ -79,7 +79,6 @@ namespace CalendarApp.Services
             {
                 if (existing.user_id == appointment.user_id)
                 {
-                    // ❌ Trùng với chính mình
                     return new AddAppointmentResponse
                     {
                         Result = AddAppointmentResult.Conflict,
@@ -89,7 +88,6 @@ namespace CalendarApp.Services
                 }
                 else
                 {
-                    // ✅ Trùng với người khác → cho join
                     return new AddAppointmentResponse
                     {
                         Result = AddAppointmentResult.Joined,

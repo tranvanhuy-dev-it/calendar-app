@@ -1,19 +1,36 @@
 ﻿using CalendarApp.DTO;
+using CalendarApp.Entities;
+using CalendarApp.Repository;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CalendarApp.Services
 {
     public class UserService
     {
-        private Repository.UserRepo _userRepo;
+        private UserRepo _userRepo;
 
         public UserService()
         {
-            _userRepo = new Repository.UserRepo();
+            _userRepo = new UserRepo();
+        }
+
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                StringBuilder builder = new StringBuilder();
+
+                foreach (byte b in bytes)
+                {
+                    builder.Append(b.ToString("x2"));
+                }
+
+                return builder.ToString();
+            }
         }
 
         public int Login(string username, string password)
@@ -23,10 +40,13 @@ namespace CalendarApp.Services
             {
                 throw new Exception("Không tìm thấy người dùng");
             }
-            if (user.password != password)
+
+            string hashedInput = HashPassword(password);
+            if (user.password != hashedInput)
             {
                 throw new Exception("Sai mật khẩu");
             }
+
             return user.user_id;
         }
 
@@ -40,13 +60,15 @@ namespace CalendarApp.Services
             {
                 throw new Exception("Email đã tồn tại");
             }
-            var user = new Entities.User
+
+            var user = new User
             {
                 username = newUser.username,
                 email = newUser.email,
-                password = newUser.password,
+                password = HashPassword(newUser.password), 
                 full_name = newUser.full_name
             };
+
             _userRepo.Add(user);
         }
     }

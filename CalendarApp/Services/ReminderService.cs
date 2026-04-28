@@ -18,7 +18,6 @@ namespace CalendarApp.Services
             _appointmentRepo = new AppointmentRepo();
         }
 
-        // 👉 Thêm lời nhắc
         public bool AddReminder(int appointmentId, int minutesBefore, string message)
         {
             var appointment = _appointmentRepo.GetAppointmentById(appointmentId);
@@ -54,8 +53,6 @@ namespace CalendarApp.Services
             return result;
         }
 
-
-        // 👉 Xóa reminder
         public bool DeleteReminder(int reminderId)
         {
             return _reminderRepo.DeleteReminder(reminderId);

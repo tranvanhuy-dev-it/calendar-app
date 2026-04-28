@@ -37,6 +37,8 @@ namespace CalendarApp.View
             dgv.Columns["location"].HeaderText = "Địa điểm";
             dgv.Columns["start_time"].HeaderText = "Giờ bắt đầu";
             dgv.Columns["end_time"].HeaderText = "Giờ kết thúc";
+            dgv.Columns["start_time"].DefaultCellStyle.Format = "HH:mm";
+            dgv.Columns["end_time"].DefaultCellStyle.Format = "HH:mm";
             dgv.Columns["is_group_meeting"].HeaderText = "Cuộc họp nhóm";
             dgv.Columns["duration_minutes"].HeaderText = "Thời lượng (p)";
             dgv.Columns["date"].HeaderText = "Ngày";
