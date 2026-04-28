@@ -70,10 +70,14 @@ namespace CalendarApp.Services
 
         public AddAppointmentResponse AddAppointment(Appointment appointment)
         {
+            if(appointment.start_time >= appointment.end_time)
+            {
+                throw new Exception("Thời gian bắt đầu phải trước thời gian kết thúc");
+            }
+
             var existing = _appointmentRepo
                 .GetAppointmentsInTimeRange(appointment.start_time, appointment.end_time)
                 .FirstOrDefault(a => a.date == appointment.date);
-
 
             if (existing != null)
             {

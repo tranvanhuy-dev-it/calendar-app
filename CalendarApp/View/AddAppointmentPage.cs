@@ -57,11 +57,7 @@ namespace CalendarApp.View
 
             try
             {
-                if (startTime >= endTime)
-                {
-                    MessageBox.Show("Vui lòng nhập đúng thời gian");
-                } 
-                else if (string.IsNullOrEmpty(titleTxt))
+                if (string.IsNullOrEmpty(titleTxt))
                 {
                     MessageBox.Show("Vui lòng nhập tiêu đề");
                 } 
