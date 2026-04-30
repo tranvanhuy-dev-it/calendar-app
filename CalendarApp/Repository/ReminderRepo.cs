@@ -40,5 +40,25 @@ namespace CalendarApp.Repository
             _context.Reminders.Remove(reminder);
             return _context.SaveChanges() > 0;
         }
+
+        public bool DeleteReminders(IEnumerable<int> reminderIds    )
+        {
+            if (reminderIds == null || !reminderIds.Any())
+            {
+                return false;
+            }
+
+            var remindersToDelete = _context.Reminders
+                                               .Where(r => reminderIds.Contains(r.reminder_id))
+                                               .ToList();
+
+            if (!remindersToDelete.Any())
+            {
+                return false;
+            }
+
+            _context.Reminders.RemoveRange(remindersToDelete);
+            return _context.SaveChanges() > 0;
+        }
     }
 }

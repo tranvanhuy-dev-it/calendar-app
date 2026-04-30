@@ -152,6 +152,11 @@ namespace CalendarApp.Services
             return _appointmentRepo.DeleteAppointment(appointmentId);
         }
 
+        public bool DeleteAppointments(IEnumerable<int> appointmentIds)
+        {
+                       return _appointmentRepo.DeleteAppointments(appointmentIds);
+        }
+
         public int GetTodayAppointmentCount(int userId)
         {
             return _appointmentRepo.GetTodayAppointmentCount(userId);

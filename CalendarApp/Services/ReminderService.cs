@@ -43,6 +43,7 @@ namespace CalendarApp.Services
 
             var result = reminders.Select(r => new ReminderResponse
             {
+                reminder_id = r.reminder_id,
                 reminder_message = r.reminder_message,
                 remind_minutes_before = r.remind_minutes_before,
                 appointment_title = r.Appointment.title,
@@ -56,6 +57,11 @@ namespace CalendarApp.Services
         public bool DeleteReminder(int reminderId)
         {
             return _reminderRepo.DeleteReminder(reminderId);
+        }
+
+        public bool DeleteReminders(IEnumerable<int> reminderIds)
+        {
+            return _reminderRepo.DeleteReminders(reminderIds);
         }
     }
 }

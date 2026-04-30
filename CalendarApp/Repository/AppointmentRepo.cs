@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 
 namespace CalendarApp.Repository
@@ -102,6 +103,58 @@ namespace CalendarApp.Repository
 
             _context.Appointments.Remove(appointment);
             return _context.SaveChanges() > 0;
+        }
+        public bool DeleteAppointments(IEnumerable<int> appointmentIds)
+        {
+            if (appointmentIds == null || !appointmentIds.Any())
+            {
+                return false;
+            }
+
+            var remindersToDelete = _context.Reminders
+                                            .Where(r => appointmentIds.Contains(r.appointment_id)) 
+                                            .ToList();
+
+            if (remindersToDelete.Any())
+            {
+                _context.Reminders.RemoveRange(remindersToDelete);
+            }
+
+            var appointmentsToDelete = _context.Appointments
+                                               .Where(a => appointmentIds.Contains(a.appointment_id)) 
+                                               .ToList();
+
+            if (!appointmentsToDelete.Any())
+            {
+
+                if (!remindersToDelete.Any())
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                _context.Appointments.RemoveRange(appointmentsToDelete);
+            }
+
+            try
+            {
+                return _context.SaveChanges() > 0;
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine($"Lỗi DbUpdateException khi xóa cuộc hẹn: {ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"Inner Exception: {ex.InnerException.Message}");
+                }
+                return false;
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine($"Lỗi chung khi xóa cuộc hẹn: {ex.Message}");
+                return false;
+            }
         }
 
         public int GetTodayAppointmentCount(int userId)

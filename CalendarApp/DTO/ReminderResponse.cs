@@ -8,6 +8,7 @@ namespace CalendarApp.DTO
 {
     public class ReminderResponse
     {
+        public int reminder_id { get; set; }
         public string reminder_message { get; set; }
 
         public string location { get; set; }

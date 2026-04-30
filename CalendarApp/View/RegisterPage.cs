@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net.Mail;
 
 namespace CalendarApp.View
 {
@@ -32,6 +33,23 @@ namespace CalendarApp.View
             string password = passwordTxt.Text;
             string email = emailTxt.Text;
             string fullName = fullNameTxt.Text;
+
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password) ||
+                string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(fullName))
+            {
+                MessageBox.Show("Vui lòng điền đầy đủ thông tin");
+                return;
+            }
+
+            try
+            {
+                var _ = new MailAddress(email);
+            }
+            catch
+            {
+                MessageBox.Show("Email không đúng định dạng");
+                return;
+            }
 
             try
             {
