@@ -110,8 +110,7 @@ namespace CalendarApp.View
         private void addBtn_Click(object sender, EventArgs e)
         {
             AddAppointmentPage addForm = new AddAppointmentPage(userid, calendar.SelectionStart);
-            addForm.Show();
-            this.Hide();
+            addForm.ShowDialog();
         }
 
         private void calendar_DateChanged(object sender, DateRangeEventArgs e)

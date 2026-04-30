@@ -42,7 +42,7 @@
             this.messageTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.messageTxt.Location = new System.Drawing.Point(161, 74);
             this.messageTxt.Name = "messageTxt";
-            this.messageTxt.Size = new System.Drawing.Size(293, 30);
+            this.messageTxt.Size = new System.Drawing.Size(370, 30);
             this.messageTxt.TabIndex = 0;
             // 
             // timeCbb
@@ -89,15 +89,15 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(30, 129);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(93, 25);
+            this.label3.Size = new System.Drawing.Size(106, 25);
             this.label3.TabIndex = 10;
-            this.label3.Text = "Trước khi";
+            this.label3.Text = "Nhắc trước";
             // 
             // addBtn
             // 
             this.addBtn.BackColor = System.Drawing.Color.Lime;
             this.addBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addBtn.Location = new System.Drawing.Point(186, 187);
+            this.addBtn.Location = new System.Drawing.Point(435, 129);
             this.addBtn.Name = "addBtn";
             this.addBtn.Size = new System.Drawing.Size(96, 38);
             this.addBtn.TabIndex = 12;
@@ -109,7 +109,7 @@
             // 
             this.button1.BackColor = System.Drawing.Color.Crimson;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(35, 187);
+            this.button1.Location = new System.Drawing.Point(309, 129);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(96, 38);
             this.button1.TabIndex = 13;
@@ -121,7 +121,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(488, 237);
+            this.ClientSize = new System.Drawing.Size(570, 210);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.addBtn);
             this.Controls.Add(this.label3);

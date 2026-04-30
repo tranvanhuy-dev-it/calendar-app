@@ -43,7 +43,6 @@ namespace CalendarApp.View
 
         private void cancelBtn_Click(object sender, EventArgs e)
         {
-            LoadCalendarPage();
             this.Close();
         }
 
@@ -84,7 +83,7 @@ namespace CalendarApp.View
                     {
                         MessageBox.Show("Tạo lịch thành công");
                         CreateReminder(response.AppointmentId.Value);
-                        LoadCalendarPage();
+
                         this.Close();
                     }
 
@@ -102,7 +101,6 @@ namespace CalendarApp.View
 
                             CreateReminder(id);
 
-                            LoadCalendarPage();
                             this.Close();
                         }
                     }
@@ -119,7 +117,6 @@ namespace CalendarApp.View
                             int id = _participantService.JoinMeeting(response.ConflictAppointmentId.Value, _userId);
                             MessageBox.Show("Đã tham gia cuộc họp");
                             CreateReminder(id);
-                            LoadCalendarPage();
                             this.Close();
                         }
                     }
@@ -129,18 +126,6 @@ namespace CalendarApp.View
             catch (Exception ex)
             {
                 MessageBox.Show("Error adding appointment: " + ex.Message);
-            }
-        }
-
-        private void LoadCalendarPage()
-        {
-            foreach (Form form in Application.OpenForms)
-            {
-                if (form is CalendarPage)
-                {
-                    form.Show();
-                    break;
-                }
             }
         }
 
