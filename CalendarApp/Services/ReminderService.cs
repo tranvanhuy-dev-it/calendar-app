@@ -54,6 +54,11 @@ namespace CalendarApp.Services
             return result;
         }
 
+        public Reminder GetReminderById(int reminderId)
+        {
+            return _reminderRepo.GetReminderById(reminderId);
+        }
+
         public bool DeleteReminder(int reminderId)
         {
             return _reminderRepo.DeleteReminder(reminderId);
@@ -62,6 +67,13 @@ namespace CalendarApp.Services
         public bool DeleteReminders(IEnumerable<int> reminderIds)
         {
             return _reminderRepo.DeleteReminders(reminderIds);
+        }
+
+        public bool UpdateReminder(int reminderId, int minutesBefore, string message)
+        {
+            if (minutesBefore < 0)
+                throw new Exception("Thời gian nhắc không hợp lệ");
+            return _reminderRepo.UpdateReminder(reminderId, minutesBefore, message);
         }
     }
 }

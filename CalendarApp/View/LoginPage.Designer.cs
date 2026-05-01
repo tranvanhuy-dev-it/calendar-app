@@ -127,6 +127,7 @@
             this.MaximumSize = new System.Drawing.Size(723, 431);
             this.MinimumSize = new System.Drawing.Size(723, 431);
             this.Name = "LoginPage";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Calender";
             this.ResumeLayout(false);
             this.PerformLayout();

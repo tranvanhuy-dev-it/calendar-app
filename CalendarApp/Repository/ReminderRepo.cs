@@ -31,6 +31,10 @@ namespace CalendarApp.Repository
                 .ToList();
         }
 
+        public Reminder GetReminderById(int reminderId)
+        {
+            return _context.Reminders.Find(reminderId);
+        }
 
         public bool DeleteReminder(int reminderId)
         {
@@ -58,6 +62,15 @@ namespace CalendarApp.Repository
             }
 
             _context.Reminders.RemoveRange(remindersToDelete);
+            return _context.SaveChanges() > 0;
+        }
+
+        public bool UpdateReminder(int reminderId, int beforeMinutes, string message)
+        {
+            var reminder = _context.Reminders.Find(reminderId);
+            if (reminder == null) return false;
+            reminder.remind_minutes_before = beforeMinutes;
+            reminder.reminder_message = message;
             return _context.SaveChanges() > 0;
         }
     }

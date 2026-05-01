@@ -84,17 +84,17 @@
     <Compile Include="Services\ParticipantService.cs" />
     <Compile Include="Services\ReminderService.cs" />
     <Compile Include="Services\UserService.cs" />
-    <Compile Include="View\AddAppointmentPage.cs">
+    <Compile Include="View\AppointmentFormPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\AddAppointmentPage.Designer.cs">
-      <DependentUpon>AddAppointmentPage.cs</DependentUpon>
+    <Compile Include="View\AppointmentFormPage.Designer.cs">
+      <DependentUpon>AppointmentFormPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\AddReminderPage.cs">
+    <Compile Include="View\ReminderFormPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\AddReminderPage.Designer.cs">
-      <DependentUpon>AddReminderPage.cs</DependentUpon>
+    <Compile Include="View\ReminderFormPage.Designer.cs">
+      <DependentUpon>ReminderFormPage.cs</DependentUpon>
     </Compile>
     <Compile Include="View\CalendarPage.cs">
       <SubType>Form</SubType>
@@ -129,11 +129,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="View\AddAppointmentPage.resx">
-      <DependentUpon>AddAppointmentPage.cs</DependentUpon>
+    <EmbeddedResource Include="View\AppointmentFormPage.resx">
+      <DependentUpon>AppointmentFormPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\AddReminderPage.resx">
-      <DependentUpon>AddReminderPage.cs</DependentUpon>
+    <EmbeddedResource Include="View\ReminderFormPage.resx">
+      <DependentUpon>ReminderFormPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\CalendarPage.resx">
       <DependentUpon>CalendarPage.cs</DependentUpon>

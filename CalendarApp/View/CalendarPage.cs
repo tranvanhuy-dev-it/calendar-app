@@ -109,8 +109,12 @@ namespace CalendarApp.View
 
         private void addBtn_Click(object sender, EventArgs e)
         {
-            AddAppointmentPage addForm = new AddAppointmentPage(userid, calendar.SelectionStart);
-            addForm.ShowDialog();
+            DialogResult confirm = MessageBox.Show("Bạn có muốn thêm cuộc hẹn mới vào ngày " + calendar.SelectionStart.ToString("dd/MM/yyyy") + " không?", "Xác nhận thêm cuộc hẹn", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (confirm == DialogResult.Yes)
+            {
+                AppointmentFormPage addForm = new AppointmentFormPage(userid, calendar.SelectionStart);
+                addForm.ShowDialog();
+            }
         }
 
         private void calendar_DateChanged(object sender, DateRangeEventArgs e)
@@ -135,7 +139,17 @@ namespace CalendarApp.View
 
         private void button1_Click(object sender, EventArgs e)
         {
-            AddReminderPage page  = new AddReminderPage((int)dgv.CurrentRow.Cells["appointment_id"].Value);
+            if (dgv.SelectedRows.Count > 1)
+            {
+                MessageBox.Show("Vui lòng chọn chỉ một cuộc hẹn để thêm nhắc nhở.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (dgv.CurrentRow == null) 
+            {
+                MessageBox.Show("Vui lòng chọn một cuộc hẹn để thêm nhắc nhở.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            ReminderFormPage page  = new ReminderFormPage((int)dgv.CurrentRow.Cells["appointment_id"].Value, 0);
             page.ShowDialog();
             loaddata();
         }
@@ -207,6 +221,21 @@ namespace CalendarApp.View
                 MessageBox.Show("Vui lòng chọn ít nhất một nhắc nhở để xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-    }
 
+        private void updateRmdBtn_Click(object sender, EventArgs e)
+        {
+            if (dgvRmd.CurrentRow == null)
+            {
+                MessageBox.Show("Vui lòng chọn một nhắc nhở để cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            int reminderId = (int)dgvRmd.CurrentRow.Cells["reminder_id"].Value;
+            if (reminderId > 0)
+            {
+                ReminderFormPage page = new ReminderFormPage(0, reminderId);
+                page.ShowDialog();
+                loaddata();
+            }
+        }
+    }
 }

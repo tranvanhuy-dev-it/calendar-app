@@ -43,6 +43,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.DelRmdBtn = new System.Windows.Forms.Button();
             this.delApmBtn = new System.Windows.Forms.Button();
+            this.updateRmdBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRmd)).BeginInit();
             this.SuspendLayout();
@@ -174,7 +175,7 @@
             // 
             this.button1.BackColor = System.Drawing.Color.Aquamarine;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(743, 630);
+            this.button1.Location = new System.Drawing.Point(641, 630);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(181, 37);
             this.button1.TabIndex = 9;
@@ -206,12 +207,25 @@
             this.delApmBtn.UseVisualStyleBackColor = false;
             this.delApmBtn.Click += new System.EventHandler(this.delApmBtn_Click);
             // 
+            // updateRmdBtn
+            // 
+            this.updateRmdBtn.BackColor = System.Drawing.Color.Yellow;
+            this.updateRmdBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.updateRmdBtn.Location = new System.Drawing.Point(829, 630);
+            this.updateRmdBtn.Name = "updateRmdBtn";
+            this.updateRmdBtn.Size = new System.Drawing.Size(96, 37);
+            this.updateRmdBtn.TabIndex = 12;
+            this.updateRmdBtn.Text = "Sửa";
+            this.updateRmdBtn.UseVisualStyleBackColor = false;
+            this.updateRmdBtn.Click += new System.EventHandler(this.updateRmdBtn_Click);
+            // 
             // CalendarPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
             this.ClientSize = new System.Drawing.Size(1051, 688);
+            this.Controls.Add(this.updateRmdBtn);
             this.Controls.Add(this.delApmBtn);
             this.Controls.Add(this.DelRmdBtn);
             this.Controls.Add(this.button1);
@@ -229,6 +243,7 @@
             this.Controls.Add(this.calendar);
             this.MinimumSize = new System.Drawing.Size(723, 431);
             this.Name = "CalendarPage";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CalendarPage";
             this.VisibleChanged += new System.EventHandler(this.CalendarPage_VisibleChanged);
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
@@ -255,5 +270,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button DelRmdBtn;
         private System.Windows.Forms.Button delApmBtn;
+        private System.Windows.Forms.Button updateRmdBtn;
     }
 }

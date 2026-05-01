@@ -1,6 +1,6 @@
 ﻿namespace CalendarApp.View
 {
-    partial class AddAppointmentPage
+    partial class AppointmentFormPage
     {
         /// <summary>
         /// Required designer variable.
@@ -165,7 +165,7 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
-            // AddAppointmentPage
+            // AppointmentFormPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -183,7 +183,8 @@
             this.Controls.Add(this.end);
             this.Controls.Add(this.start);
             this.Controls.Add(this.label2);
-            this.Name = "AddAppointmentPage";
+            this.Name = "AppointmentFormPage";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AddAppointmentPage";
             this.ResumeLayout(false);
             this.PerformLayout();

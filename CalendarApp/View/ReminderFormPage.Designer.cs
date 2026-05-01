@@ -1,6 +1,6 @@
 ﻿namespace CalendarApp.View
 {
-    partial class AddReminderPage
+    partial class ReminderFormPage
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@
         {
             this.messageTxt = new System.Windows.Forms.TextBox();
             this.timeCbb = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.label = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.addBtn = new System.Windows.Forms.Button();
@@ -62,16 +62,16 @@
             this.timeCbb.Size = new System.Drawing.Size(121, 33);
             this.timeCbb.TabIndex = 1;
             // 
-            // label2
+            // label
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label2.Location = new System.Drawing.Point(118, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(244, 32);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "THÊM LỜI NHẮC";
+            this.label.AutoSize = true;
+            this.label.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label.Location = new System.Drawing.Point(161, 9);
+            this.label.Name = "label";
+            this.label.Size = new System.Drawing.Size(244, 32);
+            this.label.TabIndex = 2;
+            this.label.Text = "THÊM LỜI NHẮC";
             // 
             // label1
             // 
@@ -117,7 +117,7 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // AddReminderPage
+            // ReminderFormPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -126,10 +126,11 @@
             this.Controls.Add(this.addBtn);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label);
             this.Controls.Add(this.timeCbb);
             this.Controls.Add(this.messageTxt);
-            this.Name = "AddReminderPage";
+            this.Name = "ReminderFormPage";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AddReminderPage";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -140,7 +141,7 @@
 
         private System.Windows.Forms.TextBox messageTxt;
         private System.Windows.Forms.ComboBox timeCbb;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button addBtn;

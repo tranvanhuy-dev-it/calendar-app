@@ -172,6 +172,7 @@
             this.MaximumSize = new System.Drawing.Size(723, 431);
             this.MinimumSize = new System.Drawing.Size(723, 431);
             this.Name = "RegisterPage";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Calendar";
             this.ResumeLayout(false);
             this.PerformLayout();

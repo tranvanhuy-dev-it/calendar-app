@@ -13,13 +13,13 @@ using System.Windows.Forms;
 
 namespace CalendarApp.View
 {
-    public partial class AddAppointmentPage : Form
+    public partial class AppointmentFormPage : Form
     {
         private int _userId;
         private DateTime _date;
         private AppointmentService _appointmentService;
         private ParticipantService _participantService;
-        public AddAppointmentPage(int userId, DateTime date)
+        public AppointmentFormPage(int userId, DateTime date)
         {
             InitializeComponent();
             _appointmentService = new AppointmentService();
@@ -137,7 +137,7 @@ namespace CalendarApp.View
                                 MessageBoxButtons.YesNo);
             if (remindConfirm == DialogResult.Yes)
             {
-                AddReminderPage frm = new AddReminderPage(appointmentId);
+                ReminderFormPage frm = new ReminderFormPage(appointmentId, 0);
                 frm.ShowDialog();
             }
         }
