@@ -35,6 +35,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.loginBtn = new System.Windows.Forms.Button();
             this.registerLink = new System.Windows.Forms.LinkLabel();
+            this.showPassChk = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label2
@@ -63,7 +64,6 @@
             this.passwordTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.passwordTxt.Location = new System.Drawing.Point(341, 180);
             this.passwordTxt.Name = "passwordTxt";
-            this.passwordTxt.PasswordChar = '*';
             this.passwordTxt.Size = new System.Drawing.Size(265, 34);
             this.passwordTxt.TabIndex = 1;
             // 
@@ -91,7 +91,7 @@
             // 
             this.loginBtn.BackColor = System.Drawing.Color.Lime;
             this.loginBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.loginBtn.Location = new System.Drawing.Point(120, 255);
+            this.loginBtn.Location = new System.Drawing.Point(120, 264);
             this.loginBtn.Name = "loginBtn";
             this.loginBtn.Size = new System.Drawing.Size(460, 38);
             this.loginBtn.TabIndex = 3;
@@ -103,7 +103,7 @@
             // 
             this.registerLink.AutoSize = true;
             this.registerLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.registerLink.Location = new System.Drawing.Point(206, 314);
+            this.registerLink.Location = new System.Drawing.Point(206, 323);
             this.registerLink.Name = "registerLink";
             this.registerLink.Size = new System.Drawing.Size(262, 22);
             this.registerLink.TabIndex = 4;
@@ -111,12 +111,24 @@
             this.registerLink.Text = "Chưa có tài khoản? Đăng ký";
             this.registerLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
+            // showPassChk
+            // 
+            this.showPassChk.AutoSize = true;
+            this.showPassChk.Location = new System.Drawing.Point(341, 220);
+            this.showPassChk.Name = "showPassChk";
+            this.showPassChk.Size = new System.Drawing.Size(130, 20);
+            this.showPassChk.TabIndex = 5;
+            this.showPassChk.Text = "Hiển thị mật khẩu";
+            this.showPassChk.UseVisualStyleBackColor = true;
+            this.showPassChk.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // LoginPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
             this.ClientSize = new System.Drawing.Size(705, 384);
+            this.Controls.Add(this.showPassChk);
             this.Controls.Add(this.registerLink);
             this.Controls.Add(this.loginBtn);
             this.Controls.Add(this.label4);
@@ -142,5 +154,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button loginBtn;
         private System.Windows.Forms.LinkLabel registerLink;
+        private System.Windows.Forms.CheckBox showPassChk;
     }
 }

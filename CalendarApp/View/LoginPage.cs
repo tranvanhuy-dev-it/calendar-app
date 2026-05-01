@@ -19,6 +19,7 @@ namespace CalendarApp.View
         {
             InitializeComponent();
             _userService = userService;
+            passwordTxt.UseSystemPasswordChar = true;
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -43,6 +44,11 @@ namespace CalendarApp.View
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            passwordTxt.UseSystemPasswordChar = !showPassChk.Checked;
         }
     }
 }
