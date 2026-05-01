@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace CalendarApp.Services
 {
-    public class ParticipantService
+    public class ParticipantService : IParticipantService
     {
-        private ParticipantRepo _participantRepo;
+        private readonly IParticipantRepo _participantRepo;
 
-        public ParticipantService()
+        public ParticipantService(IParticipantRepo participantRepo)
         {
-            _participantRepo = new ParticipantRepo();
+            _participantRepo = participantRepo;
         }
         public int JoinMeeting(int appointmentId, int userId)
         {

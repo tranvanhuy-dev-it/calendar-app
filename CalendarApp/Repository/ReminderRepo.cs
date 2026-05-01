@@ -5,13 +5,13 @@ using System.Linq;
 
 namespace CalendarApp.Repository
 {
-    public class ReminderRepo
+    public class ReminderRepo : IReminderRepo
     {
-        private CalendarContext _context;
+        private readonly CalendarContext _context;
 
-        public ReminderRepo()
+        public ReminderRepo(CalendarContext context)
         {
-            _context = new CalendarContext();
+            _context = context;
         }
 
         public bool AddReminder(Reminder reminder)

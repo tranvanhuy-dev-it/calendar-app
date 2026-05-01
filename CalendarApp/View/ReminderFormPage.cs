@@ -13,17 +13,20 @@ namespace CalendarApp.View
 {
     public partial class ReminderFormPage : Form
     {
-        private ReminderService _reminderService;
+        private IReminderService _reminderService;
         private int _appointmentId;
         private int _reminderId;
-        public ReminderFormPage(int appointmentId, int reminderId)
+        public ReminderFormPage(IReminderService reminderService)
         {
             InitializeComponent();
-            _reminderService = new ReminderService();
+            _reminderService = reminderService;
+        }
+
+        public void InitData(int appointmentId, int reminderId = 0)
+        {
             _appointmentId = appointmentId;
             _reminderId = reminderId;
-
-            if (_reminderId > 0) 
+            if (_reminderId > 0)
             {
                 var reminder = _reminderService.GetReminderById(_reminderId);
                 if (reminder != null)
@@ -34,7 +37,6 @@ namespace CalendarApp.View
                 addBtn.Text = "Lưu";
                 label.Text = "CẬP NHẬT NHẮC NHỞ";
             }
-
         }
 
         private void addBtn_Click(object sender, EventArgs e)

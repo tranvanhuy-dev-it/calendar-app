@@ -7,15 +7,15 @@ using System.Linq;
 
 namespace CalendarApp.Services
 {
-    public class ReminderService
+    public class ReminderService : IReminderService
     {
-        private ReminderRepo _reminderRepo;
-        private AppointmentRepo _appointmentRepo;
+        private readonly IReminderRepo _reminderRepo;
+        private readonly IAppointmentRepo _appointmentRepo;
 
-        public ReminderService()
+        public ReminderService(IReminderRepo reminderRepo, IAppointmentRepo appointmentRepo)
         {
-            _reminderRepo = new ReminderRepo();
-            _appointmentRepo = new AppointmentRepo();
+            _reminderRepo = reminderRepo;
+            _appointmentRepo = appointmentRepo;
         }
 
         public bool AddReminder(int appointmentId, int minutesBefore, string message)

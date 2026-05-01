@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace CalendarApp.Repository
 {
-    public class ParticipantRepo
+    public class ParticipantRepo : IParticipantRepo
     {
-        private CalendarContext _context;
+        private readonly CalendarContext _context;
 
-        public ParticipantRepo()
+        public ParticipantRepo(CalendarContext context)
         {
-            _context = new CalendarContext();
+            _context = context;
         }
 
         public int AddParticipant(int appointmentId, int userId)

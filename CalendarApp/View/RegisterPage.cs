@@ -14,11 +14,11 @@ namespace CalendarApp.View
 {
     public partial class RegisterPage : Form
     {
-        private UserService _userService;
-        public RegisterPage()
+        private IUserService _userService;
+        public RegisterPage(IUserService userService)
         {
             InitializeComponent();
-            _userService = new UserService();
+            _userService = userService;
         }
 
         private void loginLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

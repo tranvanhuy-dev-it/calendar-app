@@ -8,13 +8,13 @@ using System.Linq;
 namespace CalendarApp.Repository
 {
     public enum AddAppointmentResult { Success, Conflict, Joined }
-    public class AppointmentRepo
+    public class AppointmentRepo : IAppointmentRepo
     {
-        private CalendarContext _context;
+        private readonly CalendarContext _context;
 
-        public AppointmentRepo()
+        public AppointmentRepo(CalendarContext context)
         {
-            _context = new CalendarContext();
+            _context = context;
         }
 
         private IQueryable<Appointment> GetAppointmentsOfUserQuery(int userId)

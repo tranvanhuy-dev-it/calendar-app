@@ -1,4 +1,5 @@
 ﻿using CalendarApp.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,13 +16,17 @@ namespace CalendarApp.View
     public partial class CalendarPage : Form
     {
         private int userid;
-        private AppointmentService _service;
-        private ReminderService _reminderService;
-        public CalendarPage(int id)
+        private IAppointmentService _service;
+        private IReminderService _reminderService;
+        public CalendarPage(IAppointmentService service, IReminderService reminderService)
         {
             InitializeComponent();
-            _service = new AppointmentService();
-            _reminderService = new ReminderService();
+            _service = service;
+            _reminderService = reminderService;
+        }
+
+        public void InitData(int id)
+        {
             userid = id;
             SetGUI();
         }
@@ -54,8 +59,6 @@ namespace CalendarApp.View
 
         private void loaddata()
         {
-            _reminderService = new ReminderService();
-
             dgv.DataSource = null;
             dgv.DataSource = _service
                 .GetAppointmentsByUserId(userid, calendar.SelectionStart)
@@ -123,8 +126,12 @@ namespace CalendarApp.View
             DialogResult confirm = MessageBox.Show("Bạn có muốn thêm cuộc hẹn mới vào ngày " + calendar.SelectionStart.ToString("dd/MM/yyyy") + " không?", "Xác nhận thêm cuộc hẹn", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (confirm == DialogResult.Yes)
             {
-                AppointmentFormPage addForm = new AppointmentFormPage(userid, calendar.SelectionStart);
-                addForm.ShowDialog();
+                var addForm = Program.ServiceProvider.GetRequiredService<AppointmentFormPage>();
+                addForm.InitData(userid, calendar.SelectionStart);
+                if (addForm.ShowDialog() == DialogResult.OK)
+                {
+                    loaddata();
+                }
             }
         }
 
@@ -143,7 +150,7 @@ namespace CalendarApp.View
 
         private void logoutBtn_Click(object sender, EventArgs e)
         {
-            LoginPage loginForm = new LoginPage();
+            var loginForm = Program.ServiceProvider.GetRequiredService<LoginPage>();
             loginForm.Show();
             this.Close();
         }
@@ -160,8 +167,9 @@ namespace CalendarApp.View
                 MessageBox.Show("Vui lòng chọn một cuộc hẹn để thêm nhắc nhở.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            ReminderFormPage page  = new ReminderFormPage((int)dgv.CurrentRow.Cells["appointment_id"].Value, 0);
-            page.ShowDialog();
+            var reminderForm = Program.ServiceProvider.GetRequiredService<ReminderFormPage>();
+            reminderForm.InitData((int)dgv.CurrentRow.Cells["appointment_id"].Value);
+            reminderForm.ShowDialog();
             loaddata();
         }
 
@@ -243,7 +251,8 @@ namespace CalendarApp.View
             int reminderId = (int)dgvRmd.CurrentRow.Cells["reminder_id"].Value;
             if (reminderId > 0)
             {
-                ReminderFormPage page = new ReminderFormPage(0, reminderId);
+                var page = Program.ServiceProvider.GetRequiredService<ReminderFormPage>();
+                page.InitData(0, reminderId);
                 if (page.ShowDialog() == DialogResult.OK)
                 {
                     loaddata();
@@ -259,7 +268,8 @@ namespace CalendarApp.View
                 MessageBox.Show("Vui lòng chọn một cuộc hẹn để cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            AppointmentFormPage addForm = new AppointmentFormPage(userid, calendar.SelectionStart, (int)dgv.CurrentRow.Cells["appointment_id"].Value);
+            var addForm = Program.ServiceProvider.GetRequiredService<AppointmentFormPage>();
+            addForm.InitData(userid, calendar.SelectionStart, (int)dgv.CurrentRow.Cells["appointment_id"].Value);
             if (addForm.ShowDialog() == DialogResult.OK)
             {
                 loaddata();

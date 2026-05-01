@@ -1,4 +1,5 @@
 ﻿using CalendarApp.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,16 +14,16 @@ namespace CalendarApp.View
 {
     public partial class LoginPage : Form
     {
-        private UserService _userService;
-        public LoginPage()
+        private IUserService _userService;
+        public LoginPage(IUserService userService)
         {
             InitializeComponent();
-            _userService = new UserService();
+            _userService = userService;
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            RegisterPage registerForm = new RegisterPage();
+            var registerForm = Program.ServiceProvider.GetRequiredService<RegisterPage>();
             registerForm.Show(); this.Hide();
         }
 
@@ -34,8 +35,9 @@ namespace CalendarApp.View
             try
             {
                 int loggedInUser = _userService.Login(username, password);
-                CalendarPage calendarForm = new CalendarPage(loggedInUser);
-                calendarForm.Show(); this.Hide();
+                var calenderForm = Program.ServiceProvider.GetRequiredService<CalendarPage>();
+                calenderForm.InitData(loggedInUser);
+                calenderForm.Show(); this.Hide();
             }
             catch (Exception ex)
             {

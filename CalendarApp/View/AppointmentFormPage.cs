@@ -1,6 +1,7 @@
 ﻿using CalendarApp.Entities;
 using CalendarApp.Repository;
 using CalendarApp.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,18 +19,25 @@ namespace CalendarApp.View
         private int _userId;
         private DateTime _date;
         private int _appointmentId;
-        private AppointmentService _appointmentService;
-        private ParticipantService _participantService;
-        public AppointmentFormPage(int userId, DateTime date, int appointmentId = 0)
+        private readonly IAppointmentService _appointmentService;
+        private readonly IParticipantService _participantService;
+
+        public AppointmentFormPage(IAppointmentService appointmentService, IParticipantService participantService)
         {
             InitializeComponent();
-            _appointmentService = new AppointmentService();
-            _participantService = new ParticipantService();
+            _appointmentService = appointmentService;
+            _participantService = participantService;
+        }
+
+        public void InitData(int userId, DateTime date, int appointmentId = 0)
+        {
             _userId = userId;
             _appointmentId = appointmentId;
             _date = date;
+
             start.Value = date.Date.AddHours(9);
             end.Value = date.Date.AddHours(10);
+
             start.ValueChanged += (s, e) =>
             {
                 start.Value = _date.Date.Add(start.Value.TimeOfDay);
@@ -39,11 +47,13 @@ namespace CalendarApp.View
             {
                 end.Value = _date.Date.Add(end.Value.TimeOfDay);
             };
+
             dateTxt.Text = "Ngày: " + date.ToString("dd/MM/yyyy");
 
             if (appointmentId > 0)
             {
                 var appointment = _appointmentService.GetAppointmentById(appointmentId);
+
                 start.Value = appointment.start_time;
                 end.Value = appointment.end_time;
                 title.Text = appointment.title;
@@ -52,7 +62,6 @@ namespace CalendarApp.View
                 addBtn.Text = "Lưu";
                 label2.Text = "CẬP NHẬT LỊCH HẸN";
             }
-
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)
@@ -161,7 +170,8 @@ namespace CalendarApp.View
                                 MessageBoxButtons.YesNo);
             if (remindConfirm == DialogResult.Yes)
             {
-                ReminderFormPage frm = new ReminderFormPage(appointmentId, 0);
+                var frm = Program.ServiceProvider.GetRequiredService<ReminderFormPage>();
+                frm.InitData(appointmentId, 0);
                 frm.ShowDialog();
             }
         }

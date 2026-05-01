@@ -7,13 +7,13 @@ using System.Linq;
 
 namespace CalendarApp.Services
 {
-    public class AppointmentService
+    public class AppointmentService : IAppointmentService
     {
-        private AppointmentRepo _appointmentRepo;
+        private readonly IAppointmentRepo _appointmentRepo;
 
-        public AppointmentService()
+        public AppointmentService(IAppointmentRepo appointmentRepo)
         {
-            _appointmentRepo = new AppointmentRepo();
+            _appointmentRepo = appointmentRepo;
         }
 
         public List<AppointmentResponse> GetAppointmentsByUserId(int userId, DateTime date)

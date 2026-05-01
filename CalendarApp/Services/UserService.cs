@@ -8,13 +8,13 @@ using System.Text;
 
 namespace CalendarApp.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
-        private UserRepo _userRepo;
+        private readonly IUserRepo _userRepo;
 
-        public UserService()
+        public UserService(IUserRepo userRepo)
         {
-            _userRepo = new UserRepo();
+            _userRepo = userRepo;
         }
 
         private string HashPassword(string password)

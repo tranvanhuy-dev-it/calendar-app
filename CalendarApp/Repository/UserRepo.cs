@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace CalendarApp.Repository
 {
-    public class UserRepo
+    public class UserRepo : IUserRepo
     {
-        private CalendarContext _context;
+        private readonly CalendarContext _context;
 
-        public UserRepo()
+        public UserRepo(CalendarContext context)
         {
-            _context = new CalendarContext();
+            _context = context;
         }
 
         public User GetUserByUserName(string username)
