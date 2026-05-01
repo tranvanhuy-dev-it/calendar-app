@@ -17,14 +17,16 @@ namespace CalendarApp.View
     {
         private int _userId;
         private DateTime _date;
+        private int _appointmentId;
         private AppointmentService _appointmentService;
         private ParticipantService _participantService;
-        public AppointmentFormPage(int userId, DateTime date)
+        public AppointmentFormPage(int userId, DateTime date, int appointmentId = 0)
         {
             InitializeComponent();
             _appointmentService = new AppointmentService();
             _participantService = new ParticipantService();
             _userId = userId;
+            _appointmentId = appointmentId;
             _date = date;
             start.Value = date.Date.AddHours(9);
             end.Value = date.Date.AddHours(10);
@@ -38,6 +40,18 @@ namespace CalendarApp.View
                 end.Value = _date.Date.Add(end.Value.TimeOfDay);
             };
             dateTxt.Text = "Ngày: " + date.ToString("dd/MM/yyyy");
+
+            if (appointmentId > 0)
+            {
+                var appointment = _appointmentService.GetAppointmentById(appointmentId);
+                start.Value = appointment.start_time;
+                end.Value = appointment.end_time;
+                title.Text = appointment.title;
+                location.Text = appointment.location;
+
+                addBtn.Text = "Lưu";
+                label2.Text = "CẬP NHẬT LỊCH HẸN";
+            }
 
         }
 
@@ -77,13 +91,22 @@ namespace CalendarApp.View
                         duration_minutes = duration
                     };
 
-                    var response = _appointmentService.AddAppointment(appointment);
+                    var response = new DTO.AddAppointmentResponse();
+                    if (_appointmentId > 0)
+                    {
+                        appointment.appointment_id = _appointmentId;
+                        response = _appointmentService.UpdateAppointment(appointment);
+                    } 
+                    else
+                    {
+                        response = _appointmentService.AddAppointment(appointment);
+                    }
 
                     if (response.Result == AddAppointmentResult.Success)
                     {
-                        MessageBox.Show("Tạo lịch thành công");
+                        MessageBox.Show(response.Message);
                         CreateReminder(response.AppointmentId.Value);
-
+                        this.DialogResult = DialogResult.OK;
                         this.Close();
                     }
 
@@ -100,7 +123,7 @@ namespace CalendarApp.View
                             MessageBox.Show("Đã thay thế cuộc hẹn");
 
                             CreateReminder(id);
-
+                            this.DialogResult = DialogResult.OK;
                             this.Close();
                         }
                     }
@@ -117,6 +140,7 @@ namespace CalendarApp.View
                             int id = _participantService.JoinMeeting(response.ConflictAppointmentId.Value, _userId);
                             MessageBox.Show("Đã tham gia cuộc họp");
                             CreateReminder(id);
+                            this.DialogResult = DialogResult.OK;
                             this.Close();
                         }
                     }

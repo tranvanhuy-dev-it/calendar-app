@@ -111,6 +111,49 @@ namespace CalendarApp.Services
             };
         }
 
+        public AddAppointmentResponse UpdateAppointment(Appointment appointment)
+        {
+            if (appointment.start_time >= appointment.end_time)
+            {
+                throw new Exception("Thời gian bắt đầu phải trước thời gian kết thúc");
+            }
+
+            var existing = _appointmentRepo
+                .GetAppointmentsInTimeRange2(appointment.start_time, appointment.end_time, appointment.appointment_id)
+                .FirstOrDefault(a => a.date == appointment.date);
+
+            if (existing != null)
+            {
+                if (existing.user_id == appointment.user_id)
+                {
+                    return new AddAppointmentResponse
+                    {
+                        Result = AddAppointmentResult.Conflict,
+                        ConflictAppointmentId = existing.appointment_id,
+                        Message = "Bạn đã có cuộc hẹn trong khung giờ này"
+                    };
+                }
+                else
+                {
+                    return new AddAppointmentResponse
+                    {
+                        Result = AddAppointmentResult.Joined,
+                        ConflictAppointmentId = existing.appointment_id,
+                        Message = "Có cuộc họp nhóm trùng thời gian. Bạn có muốn tham gia không?"
+                    };
+                }
+            }
+
+            _appointmentRepo.UpdateAppointment(appointment);
+
+            return new AddAppointmentResponse
+            {
+                Result = AddAppointmentResult.Success,
+                Message = "Cập nhật lịch thành công",
+                AppointmentId = appointment.appointment_id
+            };
+        }
+
         public int ReplaceAppointment(int appointmentId, Appointment newAppointment)
         {
             var existing = _appointmentRepo.GetAppointmentById(appointmentId);
@@ -123,28 +166,6 @@ namespace CalendarApp.Services
             _appointmentRepo.AddAppointment(newAppointment);
 
             return newAppointment.appointment_id;
-        }
-
-        public bool UpdateAppointment(Appointment appointment)
-        {
-            var existing = _appointmentRepo.GetAppointmentById(appointment.appointment_id);
-            if (existing == null)
-            {
-                throw new Exception("Không tìm thấy cuộc hẹn");
-            }
-
-            bool isAvailable = _appointmentRepo.IsTimeSlotAvailable(
-                appointment.user_id,
-                appointment.start_time,
-                appointment.end_time,
-                appointment.appointment_id);
-
-            if (!isAvailable)
-            {
-                throw new Exception("Khung giờ này đã có cuộc hẹn khác");
-            }
-
-            return _appointmentRepo.UpdateAppointment(appointment);
         }
 
         public bool DeleteAppointment(int appointmentId)

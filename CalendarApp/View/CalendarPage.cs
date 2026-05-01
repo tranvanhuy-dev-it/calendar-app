@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace CalendarApp.View
 {
@@ -53,9 +54,19 @@ namespace CalendarApp.View
 
         private void loaddata()
         {
-            dgv.DataSource = _service.GetAppointmentsByUserId(userid, DateTime.Now);
-            dgvRmd.DataSource = _reminderService.GetReminders(userid);
+            _reminderService = new ReminderService();
+
+            dgv.DataSource = null;
+            dgv.DataSource = _service
+                .GetAppointmentsByUserId(userid, calendar.SelectionStart)
+                .ToList();
+
+            dgvRmd.DataSource = null;
+            dgvRmd.DataSource = _reminderService
+                .GetReminders(userid)
+                .ToList();
         }
+
 
         private void UpdateSummaryLabels()
         {
@@ -233,9 +244,27 @@ namespace CalendarApp.View
             if (reminderId > 0)
             {
                 ReminderFormPage page = new ReminderFormPage(0, reminderId);
-                page.ShowDialog();
+                if (page.ShowDialog() == DialogResult.OK)
+                {
+                    loaddata();
+                }
+
+            }
+        }
+
+        private void updateApmBtn_Click(object sender, EventArgs e)
+        {
+            if (dgv.CurrentRow == null)
+            {
+                MessageBox.Show("Vui lòng chọn một cuộc hẹn để cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            AppointmentFormPage addForm = new AppointmentFormPage(userid, calendar.SelectionStart, (int)dgv.CurrentRow.Cells["appointment_id"].Value);
+            if (addForm.ShowDialog() == DialogResult.OK)
+            {
                 loaddata();
             }
+
         }
     }
 }

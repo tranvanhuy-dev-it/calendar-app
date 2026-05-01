@@ -70,6 +70,23 @@ namespace CalendarApp.Repository
                 .ToList();
         }
 
+        public List<Appointment> GetAppointmentsInTimeRange2(DateTime startTime, DateTime endTime, int appointmentId)
+        {
+            DateTime start = startTime.Date;
+            DateTime end = start.AddDays(1);
+
+            return _context.Appointments
+                .Where(a =>
+                    a.start_time >= start &&
+                    a.start_time < end &&
+                    a.start_time < endTime &&
+                    a.end_time > startTime &&
+                    a.appointment_id != appointmentId
+                )
+                .OrderBy(a => a.start_time)
+                .ToList();
+        }
+
         public Appointment GetAppointmentById(int appointmentId)
         {
             return _context.Appointments.Find(appointmentId);
@@ -103,6 +120,19 @@ namespace CalendarApp.Repository
 
             _context.Appointments.Remove(appointment);
             return _context.SaveChanges() > 0;
+        }
+
+        public void UpdateApointment(Appointment appointment)
+        {
+            var existing = _context.Appointments.Find(appointment.appointment_id);
+            if (existing == null) return;
+            existing.title = appointment.title;
+            existing.location = appointment.location;
+            existing.start_time = appointment.start_time;
+            existing.end_time = appointment.end_time;
+            existing.is_group_meeting = appointment.is_group_meeting;
+            existing.duration_minutes = appointment.duration_minutes;
+            _context.SaveChanges();
         }
         public bool DeleteAppointments(IEnumerable<int> appointmentIds)
         {

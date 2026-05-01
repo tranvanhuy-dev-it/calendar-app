@@ -44,6 +44,7 @@
             this.DelRmdBtn = new System.Windows.Forms.Button();
             this.delApmBtn = new System.Windows.Forms.Button();
             this.updateRmdBtn = new System.Windows.Forms.Button();
+            this.updateApmBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRmd)).BeginInit();
             this.SuspendLayout();
@@ -71,7 +72,7 @@
             // 
             this.addBtn.BackColor = System.Drawing.Color.Lime;
             this.addBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addBtn.Location = new System.Drawing.Point(743, 323);
+            this.addBtn.Location = new System.Drawing.Point(640, 323);
             this.addBtn.Name = "addBtn";
             this.addBtn.Size = new System.Drawing.Size(182, 37);
             this.addBtn.TabIndex = 4;
@@ -173,7 +174,7 @@
             // 
             // button1
             // 
-            this.button1.BackColor = System.Drawing.Color.Aquamarine;
+            this.button1.BackColor = System.Drawing.Color.Lime;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.Location = new System.Drawing.Point(641, 630);
             this.button1.Name = "button1";
@@ -219,12 +220,25 @@
             this.updateRmdBtn.UseVisualStyleBackColor = false;
             this.updateRmdBtn.Click += new System.EventHandler(this.updateRmdBtn_Click);
             // 
+            // updateApmBtn
+            // 
+            this.updateApmBtn.BackColor = System.Drawing.Color.Yellow;
+            this.updateApmBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.updateApmBtn.Location = new System.Drawing.Point(829, 323);
+            this.updateApmBtn.Name = "updateApmBtn";
+            this.updateApmBtn.Size = new System.Drawing.Size(96, 37);
+            this.updateApmBtn.TabIndex = 13;
+            this.updateApmBtn.Text = "Sửa";
+            this.updateApmBtn.UseVisualStyleBackColor = false;
+            this.updateApmBtn.Click += new System.EventHandler(this.updateApmBtn_Click);
+            // 
             // CalendarPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
             this.ClientSize = new System.Drawing.Size(1051, 688);
+            this.Controls.Add(this.updateApmBtn);
             this.Controls.Add(this.updateRmdBtn);
             this.Controls.Add(this.delApmBtn);
             this.Controls.Add(this.DelRmdBtn);
@@ -271,5 +285,6 @@
         private System.Windows.Forms.Button DelRmdBtn;
         private System.Windows.Forms.Button delApmBtn;
         private System.Windows.Forms.Button updateRmdBtn;
+        private System.Windows.Forms.Button updateApmBtn;
     }
 }

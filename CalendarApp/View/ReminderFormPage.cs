@@ -54,7 +54,7 @@ namespace CalendarApp.View
                     _reminderService.AddReminder(_appointmentId, before, message);
                     MessageBox.Show("Nhắc nhở đã được thêm thành công!");
                 }
-
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
