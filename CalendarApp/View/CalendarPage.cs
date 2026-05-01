@@ -37,6 +37,9 @@ namespace CalendarApp.View
 
             loaddata();
 
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvRmd.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
             dgv.Columns["title"].HeaderText = "Tiêu đề";
             dgv.Columns["location"].HeaderText = "Địa điểm";
             dgv.Columns["start_time"].HeaderText = "Giờ bắt đầu";
@@ -44,13 +47,13 @@ namespace CalendarApp.View
             dgv.Columns["start_time"].DefaultCellStyle.Format = "HH:mm";
             dgv.Columns["end_time"].DefaultCellStyle.Format = "HH:mm";
             dgv.Columns["is_group_meeting"].HeaderText = "Cuộc họp nhóm";
-            dgv.Columns["duration_minutes"].HeaderText = "Thời lượng (p)";
+            dgv.Columns["duration_minutes"].HeaderText = "Thời lượng (phút)";
             dgv.Columns["date"].HeaderText = "Ngày";
             dgv.Columns["appointment_id"].Visible = false;
 
             dgvRmd.Columns["appointment_title"].HeaderText = "Cuộc hẹn";
             dgvRmd.Columns["location"].HeaderText = "Địa điểm";
-            dgvRmd.Columns["remind_minutes_before"].HeaderText = "Nhắc trước (p)";
+            dgvRmd.Columns["remind_minutes_before"].HeaderText = "Nhắc trước (phút)";
             dgvRmd.Columns["reminder_message"].HeaderText = "Nội dung nhắc";
             dgvRmd.Columns["appointment_date"].HeaderText = "Ngày cuộc hẹn";
             dgvRmd.Columns["appointment_date"].DefaultCellStyle.Format = "dd/MM/yyyy";
@@ -59,12 +62,10 @@ namespace CalendarApp.View
 
         private void loaddata()
         {
-            dgv.DataSource = null;
             dgv.DataSource = _service
                 .GetAppointmentsByUserId(userid, calendar.SelectionStart)
                 .ToList();
 
-            dgvRmd.DataSource = null;
             dgvRmd.DataSource = _reminderService
                 .GetReminders(userid)
                 .ToList();
