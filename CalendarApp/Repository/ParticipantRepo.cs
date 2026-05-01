@@ -28,7 +28,6 @@ namespace CalendarApp.Repository
             if (exists)
                 return -1;
 
-
             var participant = new Participant
             {
                 appointment_id = appointmentId,

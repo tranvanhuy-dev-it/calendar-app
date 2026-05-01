@@ -23,6 +23,7 @@ namespace CalendarApp.Repository
         public List<Reminder> GetReminders(int userId)
         {
             return _context.Reminders
+                .AsNoTracking()
                 .Where(r =>
                     (r.Appointment.user_id == userId || r.Appointment.Participants.Any(p => p.user_id == userId))
                     && r.Appointment.date >= DateTime.Today
@@ -33,7 +34,9 @@ namespace CalendarApp.Repository
 
         public Reminder GetReminderById(int reminderId)
         {
-            return _context.Reminders.Find(reminderId);
+            return _context.Reminders
+                .AsNoTracking()
+                .FirstOrDefault(r => r.reminder_id == reminderId);
         }
 
         public bool DeleteReminder(int reminderId)
@@ -45,7 +48,7 @@ namespace CalendarApp.Repository
             return _context.SaveChanges() > 0;
         }
 
-        public bool DeleteReminders(IEnumerable<int> reminderIds    )
+        public bool DeleteReminders(IEnumerable<int> reminderIds)
         {
             if (reminderIds == null || !reminderIds.Any())
             {

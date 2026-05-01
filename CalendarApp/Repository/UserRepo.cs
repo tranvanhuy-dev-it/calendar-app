@@ -1,5 +1,4 @@
 ﻿using CalendarApp.Entities;
-using CalendarApp.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +18,16 @@ namespace CalendarApp.Repository
 
         public User GetUserByUserName(string username)
         {
-            return _context.Users.FirstOrDefault(u => u.username == username);
+            return _context.Users
+                .AsNoTracking()
+                .FirstOrDefault(u => u.username == username);
         }
 
         public User GetUserByEmail(string email)
         {
-            return _context.Users.FirstOrDefault(u => u.email == email);
+            return _context.Users
+                .AsNoTracking()
+                .FirstOrDefault(u => u.email == email);
         }
 
         public void Add(User user)

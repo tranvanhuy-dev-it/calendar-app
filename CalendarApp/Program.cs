@@ -44,6 +44,5 @@ internal static class Program
         services.AddTransient<AppointmentFormPage>();
 
         services.AddTransient<CalendarContext>();
-
     }
 }

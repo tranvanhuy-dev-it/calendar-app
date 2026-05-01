@@ -25,7 +25,8 @@ namespace CalendarApp.Repository
                     || (a.is_group_meeting &&
                         a.Participants.Any(p => p.user_id == userId))
                 )
-                .Include(a => a.Participants); 
+                .Include(a => a.Participants)
+                .AsNoTracking();
         }
 
         public List<Appointment> GetAppointmentsByUserId(int userId)
@@ -60,6 +61,7 @@ namespace CalendarApp.Repository
             DateTime end = start.AddDays(1);
 
             return _context.Appointments
+                .AsNoTracking()
                 .Where(a =>
                     a.start_time >= start &&
                     a.start_time < end &&
@@ -76,6 +78,7 @@ namespace CalendarApp.Repository
             DateTime end = start.AddDays(1);
 
             return _context.Appointments
+                .AsNoTracking()
                 .Where(a =>
                     a.start_time >= start &&
                     a.start_time < end &&
@@ -89,7 +92,9 @@ namespace CalendarApp.Repository
 
         public Appointment GetAppointmentById(int appointmentId)
         {
-            return _context.Appointments.Find(appointmentId);
+            return _context.Appointments
+                .AsNoTracking()
+                .FirstOrDefault(a => a.appointment_id == appointmentId);
         }
 
         public bool AddAppointment(Appointment appointment)
@@ -142,7 +147,7 @@ namespace CalendarApp.Repository
             }
 
             var remindersToDelete = _context.Reminders
-                                            .Where(r => appointmentIds.Contains(r.appointment_id)) 
+                                            .Where(r => appointmentIds.Contains(r.appointment_id))
                                             .ToList();
 
             if (remindersToDelete.Any())
@@ -151,12 +156,11 @@ namespace CalendarApp.Repository
             }
 
             var appointmentsToDelete = _context.Appointments
-                                               .Where(a => appointmentIds.Contains(a.appointment_id)) 
+                                               .Where(a => appointmentIds.Contains(a.appointment_id))
                                                .ToList();
 
             if (!appointmentsToDelete.Any())
             {
-
                 if (!remindersToDelete.Any())
                 {
                     return false;
@@ -180,7 +184,7 @@ namespace CalendarApp.Repository
                 }
                 return false;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine($"Lỗi chung khi xóa cuộc hẹn: {ex.Message}");
                 return false;
