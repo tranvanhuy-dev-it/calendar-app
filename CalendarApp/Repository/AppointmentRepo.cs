@@ -20,11 +20,7 @@ namespace CalendarApp.Repository
         private IQueryable<Appointment> GetAppointmentsOfUserQuery(int userId)
         {
             return _context.Appointments
-                .Where(a =>
-                    a.user_id == userId
-                    || (a.is_group_meeting &&
-                        a.Participants.Any(p => p.user_id == userId))
-                )
+                .Where(a => a.user_id == userId || (a.is_group_meeting && a.Participants.Any(p => p.user_id == userId)))
                 .Include(a => a.Participants)
                 .AsNoTracking();
         }
@@ -122,6 +118,12 @@ namespace CalendarApp.Repository
         {
             var appointment = _context.Appointments.Find(appointmentId);
             if (appointment == null) return false;
+
+            var reminders = _context.Reminders
+                            .Where(r => r.appointment_id == appointmentId)
+                            .ToList();
+
+            _context.Reminders.RemoveRange(reminders);
 
             _context.Appointments.Remove(appointment);
             return _context.SaveChanges() > 0;
