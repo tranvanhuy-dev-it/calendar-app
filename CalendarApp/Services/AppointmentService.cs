@@ -70,35 +70,36 @@ namespace CalendarApp.Services
 
         public AddAppointmentResponse AddAppointment(Appointment appointment)
         {
-            if(appointment.start_time >= appointment.end_time)
+            var existingAppointments = _appointmentRepo
+                .GetAppointmentsInTimeRange(appointment.start_time, appointment.end_time)
+                .Where(a => a.date.Date == appointment.date.Date)
+                .ToList();
+
+            var userConflict = existingAppointments.FirstOrDefault(a => a.user_id == appointment.user_id);
+
+            if (userConflict != null)
             {
-                throw new Exception("Thời gian bắt đầu phải trước thời gian kết thúc");
+                return new AddAppointmentResponse
+                {
+                    Result = AddAppointmentResult.Conflict,
+                    ConflictAppointmentId = userConflict.appointment_id,
+                    Message = "Bạn đã có cuộc hẹn trong khung giờ này"
+                };
             }
 
-            var existing = _appointmentRepo
-                .GetAppointmentsInTimeRange(appointment.start_time, appointment.end_time)
-                .FirstOrDefault(a => a.date == appointment.date);
+            var groupMeeting = existingAppointments.FirstOrDefault(a =>
+                a.title.Trim().ToLower() == appointment.title.Trim().ToLower()
+                && a.duration_minutes == appointment.duration_minutes
+            );
 
-            if (existing != null)
+            if (groupMeeting != null)
             {
-                if (existing.user_id == appointment.user_id)
+                return new AddAppointmentResponse
                 {
-                    return new AddAppointmentResponse
-                    {
-                        Result = AddAppointmentResult.Conflict,
-                        ConflictAppointmentId = existing.appointment_id,
-                        Message = "Bạn đã có cuộc hẹn trong khung giờ này"
-                    };
-                }
-                else
-                {
-                    return new AddAppointmentResponse
-                    {
-                        Result = AddAppointmentResult.Joined,
-                        ConflictAppointmentId = existing.appointment_id,
-                        Message = "Có cuộc họp nhóm trùng thời gian. Bạn có muốn tham gia không?"
-                    };
-                }
+                    Result = AddAppointmentResult.Joined,
+                    ConflictAppointmentId = groupMeeting.appointment_id,
+                    Message = "Có cuộc họp nhóm trùng thời gian. Bạn có muốn tham gia không?"
+                };
             }
 
             _appointmentRepo.AddAppointment(appointment);
@@ -106,42 +107,44 @@ namespace CalendarApp.Services
             return new AddAppointmentResponse
             {
                 Result = AddAppointmentResult.Success,
-                Message = "Tạo lịch thành công",
-                AppointmentId= appointment.appointment_id
+                AppointmentId = appointment.appointment_id,
+                Message = "Tạo lịch thành công"
             };
         }
 
         public AddAppointmentResponse UpdateAppointment(Appointment appointment)
         {
-            if (appointment.start_time >= appointment.end_time)
+
+            var existingAppointments = _appointmentRepo
+                .GetAppointmentsInTimeRange(appointment.start_time, appointment.end_time)
+                .Where(a => a.date.Date == appointment.date.Date)
+                .ToList();
+
+            var userConflict = existingAppointments.FirstOrDefault(a => a.user_id == appointment.user_id);
+
+            if (userConflict != null)
             {
-                throw new Exception("Thời gian bắt đầu phải trước thời gian kết thúc");
+                return new AddAppointmentResponse
+                {
+                    Result = AddAppointmentResult.Conflict,
+                    ConflictAppointmentId = userConflict.appointment_id,
+                    Message = "Bạn đã có cuộc hẹn trong khung giờ này"
+                };
             }
 
-            var existing = _appointmentRepo
-                .GetAppointmentsInTimeRange2(appointment.start_time, appointment.end_time, appointment.appointment_id)
-                .FirstOrDefault(a => a.date == appointment.date);
+            var groupMeeting = existingAppointments.FirstOrDefault(a =>
+                a.title.Trim().ToLower() == appointment.title.Trim().ToLower()
+                && a.duration_minutes == appointment.duration_minutes
+            );
 
-            if (existing != null)
+            if (groupMeeting != null)
             {
-                if (existing.user_id == appointment.user_id)
+                return new AddAppointmentResponse
                 {
-                    return new AddAppointmentResponse
-                    {
-                        Result = AddAppointmentResult.Conflict,
-                        ConflictAppointmentId = existing.appointment_id,
-                        Message = "Bạn đã có cuộc hẹn trong khung giờ này"
-                    };
-                }
-                else
-                {
-                    return new AddAppointmentResponse
-                    {
-                        Result = AddAppointmentResult.Joined,
-                        ConflictAppointmentId = existing.appointment_id,
-                        Message = "Có cuộc họp nhóm trùng thời gian. Bạn có muốn tham gia không?"
-                    };
-                }
+                    Result = AddAppointmentResult.Joined,
+                    ConflictAppointmentId = groupMeeting.appointment_id,
+                    Message = "Có cuộc họp nhóm trùng thời gian. Bạn có muốn tham gia không?"
+                };
             }
 
             _appointmentRepo.UpdateAppointment(appointment);

@@ -83,10 +83,17 @@ namespace CalendarApp.View
                 {
                     MessageBox.Show("Vui lòng nhập tiêu đề");
                 } 
+
                 else if (string.IsNullOrEmpty(locationTxt))
                 {
                     MessageBox.Show("Vui lòng nhập địa điểm");
-                } 
+                }
+
+                else if (startTime >= endTime)
+                {
+                    MessageBox.Show("Thời gian bắt đầu phải trước thời gian kết thúc");
+                }
+                 
                 else
                 {
                     Appointment appointment = new Appointment
@@ -109,17 +116,9 @@ namespace CalendarApp.View
                     else
                     {
                         response = _appointmentService.AddAppointment(appointment);
-                    }
+                    } 
 
-                    if (response.Result == AddAppointmentResult.Success)
-                    {
-                        MessageBox.Show(response.Message);
-                        CreateReminder(response.AppointmentId.Value);
-                        this.DialogResult = DialogResult.OK;
-                        this.Close();
-                    }
-
-                    else if (response.Result == AddAppointmentResult.Conflict)
+                    if (response.Result == AddAppointmentResult.Conflict)
                     {
                         var confirm = MessageBox.Show(
                             response.Message + "\nBạn muốn thay thế cuộc hẹn này không",
@@ -134,6 +133,9 @@ namespace CalendarApp.View
                             CreateReminder(id);
                             this.DialogResult = DialogResult.OK;
                             this.Close();
+                        } else
+                        {
+                            MessageBox.Show("Vui lòng chọn thời gian khác");
                         }
                     }
 
@@ -152,6 +154,14 @@ namespace CalendarApp.View
                             this.DialogResult = DialogResult.OK;
                             this.Close();
                         }
+                    }
+
+                    else if (response.Result == AddAppointmentResult.Success)
+                    {
+                        MessageBox.Show(response.Message);
+                        CreateReminder(response.AppointmentId.Value);
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
                     }
                 }
                 
