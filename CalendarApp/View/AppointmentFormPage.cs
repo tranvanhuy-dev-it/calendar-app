@@ -92,6 +92,11 @@ namespace CalendarApp.View
                 else if (startTime >= endTime)
                 {
                     MessageBox.Show("Thời gian bắt đầu phải trước thời gian kết thúc");
+                } 
+                
+                else if (startTime < DateTime.Now)
+                {
+                    MessageBox.Show("Thời gian này ở trong quá khứ");
                 }
                  
                 else
